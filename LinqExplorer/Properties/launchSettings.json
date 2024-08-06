@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "LinqMaster": {
+      "commandName": "Project",
+      "commandLineArgs": "sample-7"
+    },
+    "プロファイル 1": {
+      "commandName": "Project"
+    }
+  }
+}

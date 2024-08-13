@@ -362,7 +362,7 @@ finally
 }
 ```
 
-<detaile><summary>実行結果</summary>
+<details><summary>実行結果</summary>
 
 ```cmd
 dotnet run --project LinqExplorer sample-1
@@ -391,9 +391,9 @@ dotnet run --project LinqExplorer sample-1
 @ Dispose()
 ```
 
-</detaile>
+</details>
 
-###　[sample-2] イテレーター構文
+### [sample-2] イテレーター構文
 
 `CountUpEnumerable`と`CountUpEnumerator`はイテレータ構文という機能を使って下記の様に書き換えることができます。
 
@@ -434,7 +434,7 @@ static partial class MyEnumerable
 
 [LinqExplorer/Linq/Iterators/CountUpEnumerable2.cs](./LinqExplorer/Linq/Iterators/CountUpEnumerable2.cs)
 
-<detaile><summary>実行結果</summary>
+<details><summary>実行結果</summary>
 
 ```cmd
 C:\Work\LinqExplorer> dotnet run --project LinqExplorer sample-2
@@ -484,7 +484,7 @@ C:\Work\LinqExplorer> dotnet run --project LinqExplorer sample-2
 10
 ```
 
-</detaile>
+</details>
 
 > [!NOTE]
 > イテレータ構文で記述されたコードはコンパイル時、下記のようなコードに変換されます。

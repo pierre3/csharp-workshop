@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 
-class CountUpIterator2(int start) : IEnumerable<int>
+/// <summary>
+/// イテレータ構文: IEnumerator<T>を返すメソッドの例
+/// </summary>
+class CountUpEnumerable2(int start) : IEnumerable<int>
 {
     public IEnumerator<int> GetEnumerator()
     {
@@ -19,18 +22,19 @@ class CountUpIterator2(int start) : IEnumerable<int>
     }
 }
 
+/// <summary>
+/// イテレータ構文: IEnumerable<T>を返すメソッドの例
+/// </summary>
 static partial class MyEnumerable
 {
-    public static IEnumerable<int> CountUp(int initialValue)
+    public static IEnumerable<int> CountUp(int start)
     {
-        ConsoleEx.WriteLine($"@ CountUp({initialValue})", ConsoleColor.DarkYellow);
-        var value = initialValue;
+        ConsoleEx.WriteLine($"@ CountUp({start})", ConsoleColor.DarkYellow);
+        var value = start;
         while (true)
         {
-            var value0 = value++;
-            ConsoleEx.WriteLine($"@ CountUp({value0}):return > {value}", ConsoleColor.DarkYellow);
-
-            yield return value;
+            ConsoleEx.WriteLine($"@ CountUp({value}):return > {value}", ConsoleColor.DarkYellow);
+            yield return value++;
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 
-
+/// <summary>
+/// イテレータクラスの例
+/// </summary>
 class CountUpIterator : IEnumerator<int>, IEnumerable<int>
 {
     private int _state;

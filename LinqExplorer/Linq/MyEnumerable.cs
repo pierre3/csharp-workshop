@@ -102,4 +102,21 @@ static partial class MyEnumerable
         return count;
     }
 
+    public static IEnumerable<TResult> MyGroupBy<TSource, TKey, TElement, TResult>(this IEnumerable<TSource> source,
+       Func<TSource, TKey> keySelector,
+       Func<TSource, TElement> elementSelector,
+       Func<TKey, IEnumerable<TElement>, TResult> resultSelector)
+    {
+        Console.WriteLine($"MyGrpupBy_1()");
+        foreach (var key in source.Select(keySelector).Distinct())
+        {
+            Console.WriteLine($"MyGroupBy(): key={key}");
+            var elements = source
+                .Where(item => keySelector(item)?.Equals(key) == true)
+                .Select(elementSelector);
+            Console.WriteLine($"MyGroupBy() > yield return key={key}");
+            yield return resultSelector(key, elements);
+        }
+    }
+
 }

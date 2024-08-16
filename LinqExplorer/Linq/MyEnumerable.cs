@@ -7,7 +7,7 @@ static partial class MyEnumerable
         foreach (var item in source)
         {
             var result = selector(item);
-            Console.WriteLine($"Select({item}):return > {result}");
+            Console.WriteLine($"Select({item}): yield return > {result}");
             yield return result;
         }
     }
@@ -15,12 +15,11 @@ static partial class MyEnumerable
     public static IEnumerable<T> MyWhere<T>(this IEnumerable<T> source, Func<T, bool> predicate)
     {
         Console.WriteLine($"MyWhere()");
-
         foreach (var item in source)
         {
             if (predicate(item))
             {
-                Console.WriteLine($"Where({item}):return > {item}");
+                Console.WriteLine($"Where({item}): yield return > {item}");
                 yield return item;
             }
             else
@@ -37,7 +36,7 @@ static partial class MyEnumerable
         {
             if (--count <= 0)
             {
-                Console.WriteLine($"Skip({item}):return > {item}");
+                Console.WriteLine($"Skip({item}): yield return > {item}");
                 yield return item;
             }
             else
@@ -47,6 +46,7 @@ static partial class MyEnumerable
         }
 
     }
+
     public static IEnumerable<T> MyTake<T>(this IEnumerable<T> source, int count)
     {
         Console.WriteLine($"MyTake({count})");
@@ -54,7 +54,7 @@ static partial class MyEnumerable
         {
             foreach (var item in source)
             {
-                Console.WriteLine($"Take({item}):return > {item}");
+                Console.WriteLine($"Take({item}): yield return > {item}");
                 yield return item;
                 if (--count == 0) break;
             }
@@ -97,7 +97,7 @@ static partial class MyEnumerable
         foreach (var item in source)
         {
             count++;
-            ConsoleEx.WriteLine($"Count({item}):count = {count}", ConsoleColor.Green);
+            ConsoleEx.WriteLine($"Count({item}): count = {count}", ConsoleColor.Green);
         }
         return count;
     }
@@ -107,7 +107,7 @@ static partial class MyEnumerable
        Func<TSource, TElement> elementSelector,
        Func<TKey, IEnumerable<TElement>, TResult> resultSelector)
     {
-        Console.WriteLine($"MyGrpupBy_1()");
+        Console.WriteLine($"MyGrpupBy()");
         foreach (var key in source.Select(keySelector).Distinct())
         {
             Console.WriteLine($"MyGroupBy(): key={key}");

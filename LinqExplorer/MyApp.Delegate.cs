@@ -17,6 +17,7 @@ partial class MyApp
             new (7, "Fiona Green", "A", 75),
             new (8, "George White", "C", 80)
         };
+        
         //デリゲート
         var query = students
             .Where(new Func<Student, bool>(WhereId))
@@ -47,6 +48,25 @@ partial class MyApp
         var query5 = students
             .Where(s => s.Id < 5)
             .Select(s => s.Name);
+
+        //外部変数のキャプチャ
+        //匿名メソッド、ラムダ式では自身の外側で定義した変数を参照することができます
+        var n = 5;
+        var query6 = students
+            .Where(delegate (Student s) { return s.Id < n; })
+            .Select(delegate (Student s) { return s.Name; });
+        var query7 = students
+            .Where(s => s.Id < n)
+            .Select(s => s.Name);
+        //外部変数を使わない場合、意図しない変数のキャプチャ避けるために
+        //匿名メソッド、ラムダ式にstaticを付け静的メソッドとする事が推奨されます。
+        var query8 = students
+            //.Where(static delegate (Student s) { return s.Id < n; }) <-外部変数を使うとコンパイルエラー
+            .Select(static delegate (Student s) { return s.Name; });
+        var query9 = students
+            //.Where(static s => s.Id < n) <-外部変数を使うとコンパイルエラー
+            .Select(static s => s.Name);
+
     }
 
     private bool WhereId(Student s)

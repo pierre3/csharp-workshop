@@ -1,0 +1,31 @@
+@startuml
+Sample_3 -> Take:MoveNext()
+Take -> Select:MoveNext()
+Select -> Where:MoveNext()
+Where -> CountUpEnumerator:MoveNext()
+Where <- CountUpEnumerator:Current=1
+Where -> Where: predicate(1)->false
+Where -> CountUpEnumerator:MoveNext()
+Where <- CountUpEnumerator:Current=2
+Where -> Where: predicate(2)->true
+Select <- Where:yield return 2
+Select -> Select: selector(2)->4
+Take <- Select: yield return 4
+Sample_3 <- Take: yield return 4
+Sample_3 -> Sample_3: Console.WriteLine(4)
+Sample_3 -> Take:MoveNext()
+Take -> Select:MoveNext()
+Select -> Where:MoveNext()
+Where -> CountUpEnumerator:MoveNext()
+Where <- CountUpEnumerator:Current=3
+Where -> Where: predicate(3)->false
+Where -> CountUpEnumerator:MoveNext()
+Where <- CountUpEnumerator:Current=4
+Where -> Where: predicate(4)->true
+Select <- Where:yield return 4
+Select -> Select: selector(4)->16
+Take <- Select: yield return 16
+Sample_3 <- Take: yield return 16
+Sample_3 -> Sample_3: Console.WriteLine(16)
+
+@enduml

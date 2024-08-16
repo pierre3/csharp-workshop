@@ -40,13 +40,16 @@ partial class MyApp
     public void Sample_3()
     {
         Console.WriteLine("set query");
-        var ie = new CountUpIterator(1)
+        var query = new CountUpEnumerable(1)
             .MyWhere(n => n % 2 == 0)
             .MySelect(n => n * n)
             .MyTake(5);
 
         Console.WriteLine(">>start foreach");
-        ie.MyForEach();
+        foreach (var n in query)
+        {
+            ConsoleEx.WriteLine(n, ConsoleColor.Green);
+        }
         Console.WriteLine("<< end foreach");
     }
 
@@ -63,7 +66,7 @@ partial class MyApp
         Console.WriteLine("Count()");
         var count = ie.MyCount();
         ConsoleEx.WriteLine($"Count={count}", ConsoleColor.Green);
-
+        ConsoleEx.WriteLine("-----------------------------", ConsoleColor.Magenta);
         Console.WriteLine("ToList()");
         var list = ie.MyToList();
         ConsoleEx.WriteLine($"[{string.Join(",", list)}]", ConsoleColor.Green);
@@ -73,16 +76,22 @@ partial class MyApp
     [Command("sample-5")]
     public void Sample_5()
     {
-        ConsoleEx.WriteLine("# ToList()で実体化した後にList<T>のCount()を使う", ConsoleColor.Magenta);
-        var ie = new CountUpIterator(1)
+        ConsoleEx.WriteLine("# ToList()によるクエリ結果のキャッシュ", ConsoleColor.Magenta);
+        var list = new CountUpIterator(1)
             .MyWhere(n => n % 2 == 0)
             .MySelect(n => n * n)
-            .MyTake(5);
+            .MyTake(5)
+            .MyToList();
+       　
+        ConsoleEx.WriteLine($"Count= {list.Count} //List<T>のCountプロパティから取得出来る", ConsoleColor.Green);
 
-        Console.WriteLine("ToList()");
-        var list2 = ie.MyToList();
-        ConsoleEx.WriteLine($"Count= {list2.Count}", ConsoleColor.Green);
-        ConsoleEx.WriteLine($"[{string.Join(",", list2)}]", ConsoleColor.Green);
+        ConsoleEx.WriteLine("# ここでforeachしてもクエリの再評価は行われない", ConsoleColor.Magenta);
+        Console.WriteLine(">>start foreach");
+        foreach (var item in list)
+        {
+            ConsoleEx.WriteLine(item, ConsoleColor.Green);            
+        }
+        Console.WriteLine("<<end foreach");
     }
 
     //6. GroupByの実装

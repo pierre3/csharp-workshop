@@ -1,11 +1,32 @@
 {
   "profiles": {
-    "LinqMaster": {
+    "sample-1": {
+      "commandName": "Project",
+      "commandLineArgs": "sample-1"
+    },
+    "sample-2": {
+      "commandName": "Project",
+      "commandLineArgs": "sample-2"
+    },
+    "sample-3": {
+      "commandName": "Project",
+      "commandLineArgs": "sample-3"
+    },
+    "sample-4": {
+      "commandName": "Project",
+      "commandLineArgs": "sample-4"
+    },
+    "sample-5": {
+      "commandName": "Project",
+      "commandLineArgs": "sample-5"
+    },
+    "sample-6": {
+      "commandName": "Project",
+      "commandLineArgs": "sample-6"
+    },
+    "sample-7": {
       "commandName": "Project",
       "commandLineArgs": "sample-7"
-    },
-    "プロファイル 1": {
-      "commandName": "Project"
     }
   }
 }

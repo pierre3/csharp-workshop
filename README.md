@@ -1,12 +1,17 @@
 # LINQ勉強会資料
 
 ## 1. LINQとは
-LINQ (Language Integrated Query) は、.NETフレームワークに組み込まれた強力なデータクエリ機能です。
+>統合言語クエリ (LINQ) は、C# 言語への直接的なクエリ機能の統合に基づくテクノロジのセットの名前です。 これまでは、データに対するクエリは、コンパイル時の型チェックや IntelliSense のサポートがない単純な文字列として表現されてきました。 さらに、SQL データベース、XML ドキュメント、さまざまな Web サービスなど、各種データ ソースの異なるクエリ言語を学習する必要があります。 LINQ では、クエリは、クラス、メソッド、イベントと同様に、ファースト クラスの言語コンストラクトです。。
+
+[統合言語クエリ (LINQ):Microsoft Learn](https://learn.microsoft.com/ja-jp/dotnet/csharp/linq/)
+
 
 LINQの主な特徴は以下の通りです：
-- 統一的な構文：LINQは、配列、リスト、XML、データベースなど、さまざまなデータソースに対して同じクエリ構文を使用できます。
+- 統一的な構文：LINQは、配列、リスト、XML、データベースなど、さまざまなデータソースに対して一貫したクエリ操作を提供します。
 - 強い型付け：LINQクエリはコンパイル時に型チェックされるため、型ミスなどのエラーを早期に検出できます。
 - IntelliSense サポート：Visual StudioのIntelliSenseはLINQクエリをサポートしており、クエリの作成を容易にします。
+
+
 
 ### 1.1 LINQプロバイダー
 LINQを使用すると、データベース、XML、コレクションなど、さまざまなデータソースに対して一貫した方法でクエリを実行することが可能です。以下に、いくつかの主要なLINQプロバイダーを示します。
@@ -18,6 +23,7 @@ LINQを使用すると、データベース、XML、コレクションなど、�
 
 LINQ to Objectsは、C#のコレクション（配列やListなど）に対してクエリを実行します。このテキストでは、主にLINQ to Objectsについて解説します。
 
+[C# での LINQ クエリの概要:Microsoft Learn](https://learn.microsoft.com/ja-jp/dotnet/csharp/linq/get-started/introduction-to-linq-queries)
 
 ### 1.2 クエリ構文とメソッド構文
 LINQの記述方法にはクエリ構文とメソッド構文があります。
@@ -46,7 +52,7 @@ var evenNumbers = numbers
 
 ## 2. LINQをサポートするC#の機能
 
-https://learn.microsoft.com/ja-jp/dotnet/csharp/linq/get-started/features-that-support-linq
+[LINQ をサポートする C# の機能:Microsoft Learn](https://learn.microsoft.com/ja-jp/dotnet/csharp/linq/get-started/features-that-support-linq)
 
 ### 2.1 デリゲートとラムダ式
 
@@ -69,6 +75,8 @@ class A
     {
         //指定した引数と戻り値が一致するメソッドを代入できる
         IntToString intToString = new IntToString(MethodA);
+        //コンストラクタを省略して下記のような記述でも可
+        IntToString intToString = MethodA;
     }
 }
 ```
@@ -92,14 +100,20 @@ public delegate TResult Func<in T1, in T2, in T3 out TResult>(T1 arg1, T2 arg2, 
 ```
 
 #### 匿名メソッド式
-匿名メソッド式は、必要な場所で直接メソッドを定義するための機能です。
-これにより、一度しか使用しないメソッドを作成する際に、メソッド名を付ける必要がなくなり、コードが簡潔になります。
+匿名メソッド式は、必要な場所で直接メソッドを定義するための機能です。関数を引数として渡す際や、一度しか使用しない関数を定義する際に有用です。
 
 ```cs
 class A
 {
+    //個別のメソッド定義は不要
+    //private string MethodA(int n)
+    //{
+    //    return n.ToString();
+    //}
+
     public void Sample()
     {
+        //その場で定義できる
         IntToString intToString = delegate(int n)
         { 
             return n.ToString
@@ -110,7 +124,6 @@ class A
 
 #### ラムダ式
 ラムダ式は、匿名メソッド式から省略可能な部分を省き、さらに簡略化したものです。
-関数を引数として渡す際や、一度しか使用しない関数を定義する際に有用です。
 
 ```cs
 class A
@@ -120,14 +133,16 @@ class A
         //delegeteキーワードを省略
         //引数の型が推論できる場合は省略可
         //引数が1つの場合、()の省略が可能
-        //メソッドの本体が単一ステートメント（1行で書ける）の場合は {} と return　が省略可能
+        //メソッドの本体が単一式（1行で書ける）の場合は {} と return　が省略可能
         IntToString intToString = n => n.ToString;
     }
 }
 ```
 
+参考: [デリゲートとラムダ式のサンプルコード](/LinqExplorer/MyApp.Delegate.cs)
+
 ### 2.2 オブジェクト初期化子とコレクション初期化子
-オブジェクト初期化子を利用すると、単一ステートメントでインスタンスの生成とプロパティの初期化が同時に行えます。
+オブジェクト初期化子を利用すると、単一式でインスタンスの生成とプロパティの初期化が同時に行えます。
 
 ```cs
 class Student
@@ -147,7 +162,7 @@ student.Class = "A"
 student.Score = 70;
 
 //オブジェクト初期化子を使用した場合
-//単一のステートメントでインスタンスの生成とプロパティの初期化が同時に行えます。
+//単一式でインスタンスの生成とプロパティの初期化が同時に行えます。
 var studentB = new Student {Id = 1, Name = "John Smith", Class = "A", Score = 70 };
 ```
 
@@ -365,7 +380,7 @@ finally
 <details><summary>実行結果</summary>
 
 ```cmd
-dotnet run --project LinqExplorer sample-1
+> dotnet run --project LinqExplorer sample-1
 # IEnumerable<T> と IEnumerator<T>
 @ GetEnumerator()
 @ MoveNext() > Current=1
@@ -437,7 +452,7 @@ static partial class MyEnumerable
 <details><summary>実行結果</summary>
 
 ```cmd
-C:\Work\LinqExplorer> dotnet run --project LinqExplorer sample-2
+> dotnet run --project LinqExplorer sample-2
 # イテレーター構文: IEnumerator<T>を戻り値とするパターン
 @ CountUp(1)
 @ CountUp(1): yield return > 1
@@ -462,36 +477,447 @@ C:\Work\LinqExplorer> dotnet run --project LinqExplorer sample-2
 10
 # イテレーター構文: IEnumerable<T>を戻り値とするパターン
 @ CountUp(1)
-@ CountUp(1):return > 1
+@ CountUp(1): yield return > 1
 1
-@ CountUp(2):return > 2
+@ CountUp(2): yield return > 2
 2
-@ CountUp(3):return > 3
+@ CountUp(3): yield return > 3
 3
-@ CountUp(4):return > 4
+@ CountUp(4): yield return > 4
 4
-@ CountUp(5):return > 5
+@ CountUp(5): yield return > 5
 5
-@ CountUp(6):return > 6
+@ CountUp(6): yield return > 6
 6
-@ CountUp(7):return > 7
+@ CountUp(7): yield return > 7
 7
-@ CountUp(8):return > 8
+@ CountUp(8): yield return > 8
 8
-@ CountUp(9):return > 9
+@ CountUp(9): yield return > 9
 9
-@ CountUp(10):return > 10
+@ CountUp(10): yield return > 10
 10
 ```
 
 </details>
 
 > [!NOTE]
-> イテレータ構文で記述されたコードはコンパイル時、下記のようなコードに変換されます。
+> イテレータ構文で記述されたコードはコンパイル時、おおよそ下記のようなコードに変換されます。
 > [LinqExplorer/Linq/Iterators/CountUpIterator.cs](./LinqExplorer/Linq/Iterators/CountUpIterator.cs)
-> `IEnumerable<T>`と`IEnumerator<T>`を同時に実装したイテレータクラスが生成されて、状態管理などが行っています。
-> イテレータ構文はこれらのコードを簡単に記述するための機能といえるでしょう。
+> `IEnumerable<T>`と`IEnumerator<T>`を同時に実装したイテレータクラスが生成されて、状態管理などを行っています。
+> イテレータ構文はこれらのコードを簡単に記述するための機能といえます。
 > 
-> 実際.NETのライブラリでは、LINQの各クエリメソッドの内部で`IEnumerable<T>`と`IEnumerator<T>`を同時に実装した`Iterator<T>`というクラスが実装されており、下記より確認することができます。
+> .NETのライブラリでは、LINQの各クエリメソッドの内部で`IEnumerable<T>`と`IEnumerator<T>`を同時に実装した`Iterator<T>`というクラスが実装されています。どのような実装になっているかを実際のコードを見て確認してみるのも良いでしょう。
 > https://github.com/dotnet/runtime/blob/main/src/libraries/System.Linq/src/System/Linq/Iterator.cs
 
+
+### [sample-3] クエリメソッド(Where,Select,Take)の実装
+イテレータ構文を使ってクエリメソッドを自作してみましょう。
+MyEnumerableという静的クラスを作って、そこにSelect、Where、Takeと同等の機能を持つMySelect、MyWhere、MyTakeメソッドを実装します。
+
+また、クエリ実行時の挙動を確認するためのコンソール出力も仕込んでおきます。
+```cs
+static class MyEnumerable
+{
+    public static IEnumerable<TResult> MySelect<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector)
+    {
+        Console.WriteLine("MySelect()");
+        foreach (var item in source)
+        {
+            var result = selector(item);
+            Console.WriteLine($"Select({item}):return > {result}");
+            yield return result;
+        }
+    }
+
+    public static IEnumerable<T> MyWhere<T>(this IEnumerable<T> source, Func<T, bool> predicate)
+    {
+        Console.WriteLine($"MyWhere()");
+        foreach (var item in source)
+        {
+            if (predicate(item))
+            {
+                Console.WriteLine($"Where({item}):return > {item}");
+                yield return item;
+            }
+            else
+            {
+                Console.WriteLine($"Where({item})");
+            }
+        }
+    }
+
+    public static IEnumerable<T> MyTake<T>(this IEnumerable<T> source, int count)
+    {
+        Console.WriteLine($"MyTake({count})");
+        if (count > 0)
+        {
+            foreach (var item in source)
+            {
+                Console.WriteLine($"Take({item}):return > {item}");
+                yield return item;
+                if (--count == 0) break;
+            }
+        }
+    }
+}
+```
+
+作成したクエリを下記コードで実行してみましょう
+
+```cs
+[Command("sample-3")]
+public void Sample_3()
+{
+    Console.WriteLine("set query");
+    var query = new CountUpIterator(1)
+        .MyWhere(n => n % 2 == 0)
+        .MySelect(n => n * n)
+        .MyTake(5);
+
+    Console.WriteLine(">>start foreach");
+    foreach (var n in query)
+    {
+        ConsoleEx.WriteLine(n, ConsoleColor.Green);
+    }
+    Console.WriteLine("<< end foreach");
+}
+```
+
+実行結果からforeach実行時の動作を確認してみましょう。
+
+<details>
+<summary>実行結果</summary>
+
+```cmd
+> dotnet run --project LinqExplorer sample-3
+set query
+>>start foreach
+MyTake(5)
+MySelect()
+MyWhere()
+@ GetEnumerator()
+@ MoveNext() > Current=1
+Where(1)
+@ MoveNext() > Current=2
+Where(2): yield return > 2
+Select(2): yield return > 4
+Take(4): yield return > 4
+4
+@ MoveNext() > Current=3
+Where(3)
+@ MoveNext() > Current=4
+Where(4): yield return > 4
+Select(4): yield return > 16
+Take(16): yield return > 16
+16
+@ MoveNext() > Current=5
+Where(5)
+@ MoveNext() > Current=6
+Where(6): yield return > 6
+Select(6): yield return > 36
+Take(36): yield return > 36
+36
+@ MoveNext() > Current=7
+Where(7)
+@ MoveNext() > Current=8
+Where(8): yield return > 8
+Select(8): yield return > 64
+Take(64): yield return > 64
+64
+@ MoveNext() > Current=9
+Where(9)
+@ MoveNext() > Current=10
+Where(10): yield return > 10
+Select(10): yield return > 100
+Take(100): yield return > 100
+100
+@ Dispose()
+<< end foreach
+```
+</details>
+
+#### 遅延実行
+下記のコードが実行された時点ではLINQの列挙が行われていません。foreachが開始された時点で列挙が始まり、各クエリメソッドが動き出すのが分かります。
+```cs
+//ここではクエリの手順が記録されるだけ
+var query = new CountUpIterator(1)
+    .MyWhere(n => n % 2 == 0)
+    .MySelect(n => n * n)
+    .MyTake(5);
+```
+
+#### メソッドチェーンの挙動
+実行結果を見ると、下記のような流れで処理が進んでいることが分かります。
+`yield return` した時点で処理が呼び出し元に移り、メソッドチェーンを辿る様子がイメージできたのではないでしょうか。
+
+![sequence.svg](/image/sequence.svg)
+
+### [sample-4] クエリメソッド(Count,ToList)の実装
+
+#### 遅延実行と即時実行
+sample-3 ではクエリメソッドが遅延実行されることを確認しましたが、関数を記述した位置で即座に実行（即時実行）されるクエリも存在します。
+
+どのクエリメソッドがどちらのタイプに属するかは、下記リンクの分類表で確認できます。
+[C# での LINQ クエリの概要#分類表:Microsoft Learn](
+https://learn.microsoft.com/ja-jp/dotnet/csharp/linq/get-started/introduction-to-linq-queries#classification-table)
+
+このドキュメントでは、クエリメソッドは下記の3タイプに分類されています。各タイプの詳細はドキュメントの説明を確認してください。
+- 即時実行:  主にスカラ値(単一の値)を返すクエリ`Count`,`Max`,`Average`,`First`など
+- 遅延実行(ストリーミング): 主に`IEnumerable<T>`を返すクエリ `Where`,`Select`,`Skip`など
+- 遅延実行(非ストリーミング): 主に並び替えやグループ化などを行うクエリ`GrpupBy`,`OrderBy`など
+
+#### 即時実行するクエリの実装
+Count,ToListを例に即時実行するクエリメソッドの動きを確認してみましょう。
+即時実行するクエリメソッドは`yield return`を使わず、通常のforeachを最後までまわします。クエリメソッド自体がforeachの列挙を実行する必要があるため、即時実行になるわけです。
+
+```cs
+static class MyEnumerable
+{
+    public static int MyCount<T>(this IEnumerable<T> source)
+    {
+        Console.WriteLine($"MyCount()");
+        var count = 0;
+        foreach (var item in source)
+        {
+            count++;
+            ConsoleEx.WriteLine($"Count({item}): count = {count}", ConsoleColor.Green);
+        }
+        return count; //全要素をカウントした後、最後に結果を返す
+    }
+
+    public static IList<T> MyToList<T>(this IEnumerable<T> source)
+    {
+        Console.WriteLine("MyToList()");
+        var list = new List<T>();
+        foreach (var item in source)
+        {
+            ConsoleEx.WriteLine($"ToList({item})", ConsoleColor.Green);
+            list.Add(item);
+        }
+        return list; //全要素をListに詰めた後にそのリストを返す
+    }
+}
+```
+
+下記コードで実行してみましょう。
+
+```cs
+[Command("sample-4")]
+public void Sample_4()
+{
+    ConsoleEx.WriteLine("# Count() と ToList()", ConsoleColor.Magenta);
+    var query = new CountUpIterator(1)
+        .MyWhere(n => n % 2 == 0)
+        .MySelect(n => n * n)
+        .MyTake(5);
+
+    Console.WriteLine("Count()");
+    var count = query.MyCount();
+    ConsoleEx.WriteLine($"Count={count}", ConsoleColor.Green);
+
+    ConsoleEx.WriteLine("-----------------------------", ConsoleColor.Magenta);
+    Console.WriteLine("ToList()");
+    var list = query.MyToList();
+    ConsoleEx.WriteLine($"[{string.Join(",", list)}]", ConsoleColor.Green);
+}
+```
+
+<details><summary>実行結果</summary>
+
+```cmd
+> dotnet run --project LinqExplorer sample-4
+# Count() と ToList()
+@ new CountUpIterator()
+Count()
+MyCount()
+MyTake(5)
+MySelect()
+MyWhere()
+@ GetEnumerator()
+@ MoveNext() > 1
+Where(1)
+@ MoveNext() > 2
+Where(2): yield return > 2
+Select(2): yield return > 4
+Take(4): yield return > 4
+Count(4): count = 1
+@ MoveNext() > 3
+Where(3)
+@ MoveNext() > 4
+Where(4): yield return > 4
+Select(4): yield return > 16
+Take(16): yield return > 16
+Count(16): count = 2
+@ MoveNext() > 5
+Where(5)
+@ MoveNext() > 6
+Where(6): yield return > 6
+Select(6): yield return > 36
+Take(36): yield return > 36
+Count(36): count = 3
+@ MoveNext() > 7
+Where(7)
+@ MoveNext() > 8
+Where(8): yield return > 8
+Select(8): yield return > 64
+Take(64): yield return > 64
+Count(64): count = 4
+@ MoveNext() > 9
+Where(9)
+@ MoveNext() > 10
+Where(10): yield return > 10
+Select(10): yield return > 100
+Take(100): yield return > 100
+Count(100): count = 5
+@ Dispose()
+Count=5
+-----------------------------
+ToList()
+MyToList()
+MyTake(5)
+MySelect()
+MyWhere()
+@ GetEnumerator()
+@ new CountUpIterator()
+@ MoveNext() > 1
+Where(1)
+@ MoveNext() > 2
+Where(2): yield return > 2
+Select(2): yield return > 4
+Take(4): yield return > 4
+ToList(4)
+@ MoveNext() > 3
+Where(3)
+@ MoveNext() > 4
+Where(4): yield return > 4
+Select(4): yield return > 16
+Take(16): yield return > 16
+ToList(16)
+@ MoveNext() > 5
+Where(5)
+@ MoveNext() > 6
+Where(6): yield return > 6
+Select(6): yield return > 36
+Take(36): yield return > 36
+ToList(36)
+@ MoveNext() > 7
+Where(7)
+@ MoveNext() > 8
+Where(8): yield return > 8
+Select(8): yield return > 64
+Take(64): yield return > 64
+ToList(64)
+@ MoveNext() > 9
+Where(9)
+@ MoveNext() > 10
+Where(10): yield return > 10
+Select(10): yield return > 100
+Take(100): yield return > 100
+ToList(100)
+@ Dispose()
+[4,16,36,64,100]
+```
+
+</details>
+
+全体の動きは遅延実行の場合とほとんど変わっていません。Count、ToListがforeachと置き換わっているのが分かります。
+
+### [sample-5] クエリ結果をメモリに格納する
+即時実行するクエリメソッドの中でも下記メソッドは、クエリの実行結果をメモリに保存する際に利用します。
+
+- ToArray
+- ToList
+- ToDictionary
+- ToLookUp
+- 
+同じクエリを複数回foreachで処理するような場合、これらを使ってクエリを即時実行し、その結果を利用した方がパフォーマンス的に有利になる場合があります。
+
+[C# での LINQ クエリの概要:クエリ結果をメモリに格納する](https://learn.microsoft.com/ja-jp/dotnet/csharp/linq/get-started/introduction-to-linq-queries#store-the-results-of-a-query-in-memory)
+
+次のプログラムを実行してみましょう。
+
+```cs
+[Command("sample-5")]
+public void Sample_5()
+{
+    ConsoleEx.WriteLine("# ToList()によるクエリ結果のキャッシュ", ConsoleColor.Magenta);
+    var list = new CountUpIterator(1)
+        .MyWhere(n => n % 2 == 0)
+        .MySelect(n => n * n)
+        .MyTake(5)
+        .MyToList();
+    　
+    ConsoleEx.WriteLine($"Count= {list.Count} //List<T>のCountプロパティから取得出来る", ConsoleColor.Green);
+
+    ConsoleEx.WriteLine("# ここでforeachしてもクエリの再評価は行われない", ConsoleColor.Magenta);
+    Console.WriteLine(">>start foreach");
+    foreach (var item in list)
+    {
+        ConsoleEx.WriteLine(item, ConsoleColor.Green);            
+    }
+    Console.WriteLine("<<end foreach");
+}
+```
+<details><summary>実行結果</summary>
+
+```cmd
+> dotnet run --project LinqExplorer sample-5
+# ToList()によるクエリ結果のキャッシュ
+@ new CountUpIterator()
+MyToList()
+MyTake(5)
+MySelect()
+MyWhere()
+@ GetEnumerator()
+@ MoveNext() > 1
+Where(1)
+@ MoveNext() > 2
+Where(2): yield return > 2
+Select(2): yield return > 4
+Take(4): yield return > 4
+ToList(4)
+@ MoveNext() > 3
+Where(3)
+@ MoveNext() > 4
+Where(4): yield return > 4
+Select(4): yield return > 16
+Take(16): yield return > 16
+ToList(16)
+@ MoveNext() > 5
+Where(5)
+@ MoveNext() > 6
+Where(6): yield return > 6
+Select(6): yield return > 36
+Take(36): yield return > 36
+ToList(36)
+@ MoveNext() > 7
+Where(7)
+@ MoveNext() > 8
+Where(8): yield return > 8
+Select(8): yield return > 64
+Take(64): yield return > 64
+ToList(64)
+@ MoveNext() > 9
+Where(9)
+@ MoveNext() > 10
+Where(10): yield return > 10
+Select(10): yield return > 100
+Take(100): yield return > 100
+ToList(100)
+@ Dispose()
+Count= 5 //List<T>のCountプロパティから取得出来る
+# ここでforeachしてもクエリの再評価は行われない
+>>start foreach
+4
+16
+36
+64
+100
+<<end foreach
+```
+
+</details>
+
+`ToList()`でクエリが即時実行され、その結果がListに保存されたことで、次のforeachではクエリの再評価が行われない事が分かります。
+また、要素数（Count）は、処理結果の`List<T>`のCountプロパティを使えば、Count()メソッドによるクエリの再実行は不要となります。

@@ -1,0 +1,8 @@
+@startuml XRegion
+class XDrawing.XRegion  {
+    + AddRect(rect : XRect) : void
+    + AddOval(rect : XRect) : void
+    + Contains(X : double, Y : double) : bool
+    + XRegion()
+}
+@enduml

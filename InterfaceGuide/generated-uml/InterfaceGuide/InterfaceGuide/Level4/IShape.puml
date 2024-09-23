@@ -1,0 +1,8 @@
+@startuml IShape
+!include ./IGraphics.puml
+interface Shapes4.IShape  {
+    + Draw(g : IGraphics) : void
+    + Contains(X : double, Y : double) : bool
+}
+IShape ..> IGraphics
+@enduml

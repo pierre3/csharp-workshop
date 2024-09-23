@@ -1,0 +1,10 @@
+@startuml XHitTestStrategy
+!include ./IHitTestStrategy.puml
+!include ../XDrawing/XRegion.puml
+class App.XHitTestStrategy  {
+    + XHitTestStrategy()
+    + Contains(bounds : Rectangle, x : double, y : double) : bool
+}
+IHitTestStrategy <|.. XHitTestStrategy
+XHitTestStrategy ..> XRegion:<<Use>>
+@enduml

@@ -1,0 +1,14 @@
+@startuml XGraphicsWrapper
+!include ./IGraphics.puml
+!include ../XDrawing/XGraphics.puml
+class AppX.XGraphicsWrapper  {
+    - <<readonly>> g : XGraphics
+    + DrawOval(bounds : Rectangle) : void
+    + DrawRectangle(bounds : Rectangle) : void
+    + XGraphicsWrapper()
+}
+IGraphics <|.. XGraphicsWrapper
+XGraphicsWrapper *-- XGraphics : g
+XGraphicsWrapper ..> XGraphics
+
+@enduml

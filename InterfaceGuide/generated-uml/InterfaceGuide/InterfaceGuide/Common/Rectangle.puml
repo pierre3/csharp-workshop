@@ -1,0 +1,8 @@
+@startuml Rectangle
+struct Rectangle <<sealed>> <<record>>  {
+    + X : double <<get>> <<set>>
+    + Y : double <<get>> <<set>>
+    + Width : double <<get>> <<set>>
+    + Height : double <<get>> <<set>>
+}
+@enduml

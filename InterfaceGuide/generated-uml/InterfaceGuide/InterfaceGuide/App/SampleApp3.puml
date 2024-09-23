@@ -1,0 +1,11 @@
+@startuml SampleApp3
+!include ../Level3/RectangleShape.puml
+!include ../Level3/WinGraphicsWrapper.puml
+!include ../Level3/XGraphicsWrapper.puml
+class AppWin.SampleAppWin  { }
+class AppX.SampleAppX  { }
+SampleAppWin ..> IShape:<<Use>>
+SampleAppWin ..> WinGraphicsWrapper:<<Create>>
+SampleAppX ..> IShape:<<Use>>
+SampleAppX ..> XGraphicsWrapper:<<Create>>
+@enduml

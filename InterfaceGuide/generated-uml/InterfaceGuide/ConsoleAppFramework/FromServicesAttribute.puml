@@ -1,0 +1,5 @@
+@startuml FromServicesAttribute
+class FromServicesAttribute <<sealed>>  {
+    + FromServicesAttribute()
+}
+@enduml

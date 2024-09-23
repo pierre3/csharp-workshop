@@ -1,0 +1,16 @@
+@startuml ConsoleApp::ConsoleAppBuilder
+struct ConsoleApp::ConsoleAppBuilder <<sealed>>  {
+    + ConsoleAppBuilder()
+    + Add(commandName : string, command : Delegate) : void
+    + Add<T>() : void
+    + Add<T>(commandPath : string) : void
+    + UseFilter<T>() : void
+    + Run(args : string[]) : void
+    + RunAsync(args : string[]) : Task
+    - AddCore(commandName : string, command : Delegate) : void
+    - RunCore(args : string[]) : void
+    - RunAsyncCore(args : string[], result : Task) : void
+    - {static} ShowHelp(helpId : int) : void
+    - {static} TryShowHelpOrVersion(args : ReadOnlySpan<string>, requiredParameterCount : int, helpId : int) : bool
+}
+@enduml

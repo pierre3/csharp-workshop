@@ -1,0 +1,10 @@
+@startuml WinHitTestStrategy
+!include ./IHitTestStrategy.puml
+!include ../WinDrawing/WinRegion.puml
+class App.WinHitTestStrategy  {
+    + WinHitTestStrategy()
+    + Contains(bounds : Rectangle, x : double, y : double) : bool
+}
+IHitTestStrategy <|.. WinHitTestStrategy
+WinHitTestStrategy ..> WinRegion:<<Use>>
+@enduml

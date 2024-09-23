@@ -1,0 +1,6 @@
+@startuml IGraphics
+interface Shapes3.IGraphics  {
+    + DrawRectangle(bounds : Rectangle) : void
+    + DrawOval(bounds : Rectangle) : void
+}
+@enduml

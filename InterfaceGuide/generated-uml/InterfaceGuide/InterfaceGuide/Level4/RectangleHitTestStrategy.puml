@@ -1,0 +1,8 @@
+@startuml RectangleHitTestStrategy
+!include ./IHitTestStrategy.puml
+class Shapes4.RectangleHitTestStrategy  {
+    + Contains(bounds : Rectangle, x : double, y : double) : bool
+    + RectangleHitTestStrategy()
+}
+IHitTestStrategy <|.. RectangleHitTestStrategy
+@enduml

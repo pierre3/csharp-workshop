@@ -1,0 +1,5 @@
+@startuml IArgumentParser`1
+interface IArgumentParser`1<T>  {
+    + {static} TryParse(s : ReadOnlySpan<char>, result : T) : bool
+}
+@enduml

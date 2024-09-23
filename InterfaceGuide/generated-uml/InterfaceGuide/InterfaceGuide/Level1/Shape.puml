@@ -1,0 +1,16 @@
+@startuml Shape
+!include ./Shape.ShapeType.puml
+!include ../WinDrawing/WinGraphics.puml
+class Shapes1.Shape  {
+    + Shape(type : ShapeType, bounds : Rectangle)
+    - _g : WinGraphics
+    + <<readonly>> Type : ShapeType <<get>>
+    + <<readonly>> Bounds : Rectangle <<get>>
+    + Draw() : void
+    + Contains(X : double, Y : double) : bool
+}
+Shape ..> WinGraphics
+Shape +.. ShapeType
+Shape *-- WinGraphics : _g
+Shape *-- ShapeType : Type
+@enduml

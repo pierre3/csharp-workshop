@@ -1,0 +1,18 @@
+@startuml ConsoleAppContext
+class ConsoleAppContext <<record>>  {
+    + ConsoleAppContext(CommandName : string, Arguments : string[], State : object?)
+    # <<readonly>> <<virtual>> EqualityContract : Type <<get>>
+    + CommandName : string <<get>> <<set>>
+    + Arguments : string[] <<get>> <<set>>
+    + State : object? <<get>> <<set>>
+    + <<override>> ToString() : string
+    # <<virtual>> PrintMembers(builder : StringBuilder) : bool
+    + {static} operator !=(left : ConsoleAppContext?, right : ConsoleAppContext?) : bool
+    + {static} operator ==(left : ConsoleAppContext?, right : ConsoleAppContext?) : bool
+    + <<override>> GetHashCode() : int
+    + <<override>> Equals(obj : object?) : bool
+    + <<virtual>> Equals(other : ConsoleAppContext?) : bool
+    # ConsoleAppContext(original : ConsoleAppContext)
+    + Deconstruct(CommandName : string, Arguments : string[], State : object?) : void
+}
+@enduml

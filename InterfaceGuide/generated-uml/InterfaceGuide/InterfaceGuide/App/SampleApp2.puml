@@ -1,0 +1,7 @@
+@startuml SampleApp2
+!include ../Level2/Shapes.puml
+class App.SampleApp2  { }
+SampleApp2 ..> IShape:<<Use>>
+SampleApp2 ..> RectangleShape:<<Create>>
+SampleApp2 ..> OvalShape:<<Create>>
+@enduml

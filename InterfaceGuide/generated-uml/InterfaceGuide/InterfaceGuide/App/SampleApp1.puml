@@ -1,0 +1,5 @@
+@startuml SampleApp1
+!include ../Level1/Shape.puml
+class App.SampleApp1  { }
+SampleApp1 ..> Shape:<<Use>>
+@enduml

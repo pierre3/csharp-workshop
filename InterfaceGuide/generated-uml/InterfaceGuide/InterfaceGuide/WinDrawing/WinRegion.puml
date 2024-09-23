@@ -1,0 +1,8 @@
+@startuml WinRegion
+class WinDrawing.WinRegion  {
+    + AddRect(rect : WinRect) : void
+    + AddOval(rect : WinRect) : void
+    + Contains(X : double, Y : double) : bool
+    + WinRegion()
+}
+@enduml

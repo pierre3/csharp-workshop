@@ -1,0 +1,16 @@
+@startuml RectangleShape
+!include ./IShape.puml
+!include ./IHitTestStrategy.puml
+
+class Shapes4.OvalShape  {
+    + OvalShape(bounds : Rectangle, hittestStrategy : IHitTestStrategy?)
+    - <<readonly>> HitTestStrategy : IHitTestStrategy <<get>>
+    + <<readonly>> Bounds : Rectangle <<get>>
+    + Draw(g : IGraphics) : void
+    + Contains(X : double, Y : double) : bool
+}
+IShape <|.. OvalShape
+OvalShape ..> IHitTestStrategy
+OvalShape *-- IHitTestStrategy : HitTestStrategy
+
+@enduml

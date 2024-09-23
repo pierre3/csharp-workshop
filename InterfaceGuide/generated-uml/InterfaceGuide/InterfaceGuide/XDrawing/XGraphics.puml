@@ -1,0 +1,7 @@
+@startuml XGraphics
+class XDrawing.XGraphics  {
+    + DrawRectangle(rect : XRect) : void
+    + DrawEllipse(rect : XRect) : void
+    + XGraphics()
+}
+@enduml

@@ -1,0 +1,13 @@
+@startuml WinGraphicsWrapper
+!include ./IGraphics.puml
+!include ../WinDrawing/WinGraphics.puml
+class AppWin.WinGraphicsWrapper  {
+    - <<readonly>> g : WinGraphics
+    + DrawOval(bounds : Rectangle) : void
+    + DrawRectangle(bounds : Rectangle) : void
+    + WinGraphicsWrapper()
+}
+IGraphics <|.. WinGraphicsWrapper
+WinGraphicsWrapper *-- WinGraphics : g
+WinGraphicsWrapper ..> WinGraphics
+@enduml

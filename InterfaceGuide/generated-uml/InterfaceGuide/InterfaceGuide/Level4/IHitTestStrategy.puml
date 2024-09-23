@@ -1,0 +1,5 @@
+@startuml IHitTestStrategy
+interface Shapes4.IHitTestStrategy  {
+    + Contains(bounds : Rectangle, x : double, y : double) : bool
+}
+@enduml

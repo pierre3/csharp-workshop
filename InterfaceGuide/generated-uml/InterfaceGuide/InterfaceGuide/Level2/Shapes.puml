@@ -1,0 +1,25 @@
+@startuml OvalShape
+!include ./IShape.puml
+!include ../WinDrawing/WinGraphics.puml
+class Shapes2.RectangleShape  {
+    + RectangleShape(bounds : Rectangle)
+    - _g : WinGraphics
+    + <<readonly>> Bounds : Rectangle <<get>>
+    + Draw() : void
+    + Contains(X : double, Y : double) : bool
+}
+class Shapes2.OvalShape  {
+    + OvalShape(bounds : Rectangle)
+    - _g : WinGraphics
+    + <<readonly>> Bounds : Rectangle <<get>>
+    + Draw() : void
+    + Contains(X : double, Y : double) : bool
+}
+IShape <|.. RectangleShape
+RectangleShape *-- WinGraphics : _g
+RectangleShape ..> WinGraphics
+IShape <|.. OvalShape
+OvalShape *-- WinGraphics : _g
+OvalShape ..> WinGraphics
+
+@enduml

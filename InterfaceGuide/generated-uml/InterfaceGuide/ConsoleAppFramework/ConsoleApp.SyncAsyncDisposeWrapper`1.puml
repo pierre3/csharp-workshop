@@ -1,0 +1,8 @@
+@startuml ConsoleApp::SyncAsyncDisposeWrapper`1
+struct ConsoleApp::SyncAsyncDisposeWrapper`1<T> <<sealed>>  {
+    + SyncAsyncDisposeWrapper(value : T)
+    + <<readonly>> Value : T <<get>>
+    + Dispose() : void
+    + SyncAsyncDisposeWrapper()
+}
+@enduml

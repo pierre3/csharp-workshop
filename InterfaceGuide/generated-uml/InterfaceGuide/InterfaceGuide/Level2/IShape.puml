@@ -1,0 +1,6 @@
+@startuml IShape
+interface Shapes2.IShape  {
+    + Draw() : void
+    + Contains(X : double, Y : double) : bool
+}
+@enduml

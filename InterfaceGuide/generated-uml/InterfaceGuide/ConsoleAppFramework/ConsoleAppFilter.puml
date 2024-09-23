@@ -1,0 +1,9 @@
+@startuml ConsoleAppFilter
+!include ./ConsoleAppContext.puml
+abstract class ConsoleAppFilter  {
+    # ConsoleAppFilter(next : ConsoleAppFilter)
+    # <<readonly>> Next : ConsoleAppFilter
+    + {abstract} InvokeAsync(context : ConsoleAppContext, cancellationToken : CancellationToken) : Task
+}
+ConsoleAppFilter ..> ConsoleAppContext
+@enduml

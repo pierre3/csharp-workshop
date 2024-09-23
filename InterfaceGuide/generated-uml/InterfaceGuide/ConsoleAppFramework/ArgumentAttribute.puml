@@ -1,0 +1,5 @@
+@startuml ArgumentAttribute
+class ArgumentAttribute <<sealed>>  {
+    + ArgumentAttribute()
+}
+@enduml

@@ -1,0 +1,7 @@
+@startuml WinGraphics
+class WinDrawing.WinGraphics  {
+    + DrawRect(rect : WinRect) : void
+    + DrawOval(rect : WinRect) : void
+    + WinGraphics()
+}
+@enduml

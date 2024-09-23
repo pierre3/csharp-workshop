@@ -2,3 +2,4 @@
 
 ## Index
 - [LINQ](/LinqExplorer/)
+- [Interface](/InterfaceGuide/)

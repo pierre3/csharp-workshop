@@ -1,0 +1,16 @@
+@startuml ConsoleApp::PosixSignalHandler
+class ConsoleApp::PosixSignalHandler <<sealed>>  {
+    + <<readonly>> Token : CancellationToken <<get>>
+    + <<readonly>> TimeoutToken : CancellationToken <<get>>
+    - cancellationTokenSource : CancellationTokenSource
+    - timeoutCancellationTokenSource : CancellationTokenSource
+    - timeout : TimeSpan
+    - sigInt : PosixSignalRegistration?
+    - sigQuit : PosixSignalRegistration?
+    - sigTerm : PosixSignalRegistration?
+    - PosixSignalHandler(timeout : TimeSpan)
+    + {static} Register(timeout : TimeSpan) : PosixSignalHandler
+    - HandlePosixSignal(context : PosixSignalContext) : void
+    + Dispose() : void
+}
+@enduml

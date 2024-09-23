@@ -1,0 +1,12 @@
+@startuml RectangleShape
+!include ./IShape.puml
+!include ./IGraphics.puml
+class Shapes3.RectangleShape  {
+    + RectangleShape(bounds : Rectangle)
+    + <<readonly>> Bounds : Rectangle <<get>>
+    + Draw(g : IGraphics) : void
+    + Contains(X : double, Y : double) : bool
+}
+IShape <|.. RectangleShape
+RectangleShape ..> IGraphics
+@enduml

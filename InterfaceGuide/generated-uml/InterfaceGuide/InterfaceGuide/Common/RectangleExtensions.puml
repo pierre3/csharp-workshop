@@ -1,0 +1,8 @@
+@startuml RectangleExtensions
+!include ./Rectangle.puml
+class RectangleExtensions <<static>>  {
+    + {static} ToWRect(rect : Rectangle) : WinRect
+    + {static} ToXRect(rect : Rectangle) : XRect
+}
+RectangleExtensions ..> Rectangle
+@enduml

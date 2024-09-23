@@ -1,0 +1,9 @@
+@startuml SampleApp4
+!include ../Level4/OvalShape.puml
+!include ../Level4/OvalHitTestStrategy.puml
+!include ../Level4/XHitTestStrategy.puml
+
+class App.SampleApp4  { }
+SampleApp4 ..> IShape:<<Use>>
+SampleApp4 ..> XHitTestStrategy:<<Create>>
+@enduml

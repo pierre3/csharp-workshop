@@ -1,0 +1,35 @@
+@startuml ConsoleApp
+!include ./ConsoleAppFilter.puml
+!include ./ConsoleApp.PosixSignalHandler.puml
+!include ./ConsoleApp.SyncAsyncDisposeWrapper`1.puml
+!include ./ConsoleApp.ConsoleAppBuilder.puml
+class ConsoleApp <<static>>  {
+    + {static} ServiceProvider : IServiceProvider? <<get>> <<set>>
+    + {static} Timeout : TimeSpan <<get>> <<set>>
+    + {static} JsonSerializerOptions : JsonSerializerOptions? <<get>> <<set>>
+    + {static} Version : string? <<get>> <<set>>
+    - {static} logAction : Action<string>?
+    + {static} Log : Action<string> <<get>> <<set>>
+    - {static} logErrorAction : Action<string>?
+    + {static} LogError : Action<string> <<get>> <<set>>
+    + {static} Run(args : string[]) : void
+    + {static} RunAsync(args : string[]) : Task
+    + {static} Create() : ConsoleAppBuilder
+    - {static} ThrowArgumentParseFailed(argumentName : string, value : string) : void
+    - {static} ThrowRequiredArgumentNotParsed(name : string) : void
+    - {static} ThrowArgumentNameNotFound(argumentName : string) : void
+    - {static} TryIncrementIndex(index : int, length : int) : bool
+    - {static} TryParseParamsArray<T>(args : ReadOnlySpan<string>, result : T[], i : int) : bool
+    - {static} TrySplitParse<T>(s : ReadOnlySpan<char>, result : T[]) : bool
+    - {static} ValidateParameter(value : object?, parameter : ParameterInfo, validationContext : ValidationContext, errorMessages : StringBuilder?) : void
+    - {static} TryShowHelpOrVersion(args : ReadOnlySpan<string>, requiredParameterCount : int, helpId : int) : bool
+    - {static} ShowVersion() : void
+    - {static} ShowHelp(helpId : int) : void
+    - {static} <<async>> RunWithFilterAsync(commandName : string, args : string[], invoker : ConsoleAppFilter) : Task
+    - {static} ConsoleApp()
+}
+ConsoleApp ..> ConsoleAppFilter
+ConsoleApp +.. ConsoleApp::PosixSignalHandler
+ConsoleApp +.. "ConsoleApp::SyncAsyncDisposeWrapper`1"
+ConsoleApp +.. ConsoleApp::ConsoleAppBuilder
+@enduml

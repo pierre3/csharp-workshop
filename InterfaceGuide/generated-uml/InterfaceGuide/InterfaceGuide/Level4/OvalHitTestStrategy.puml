@@ -1,0 +1,8 @@
+@startuml OvalHitTestStrategy
+!include ./IHitTestStrategy.puml
+class Shapes4.OvalHitTestStrategy  {
+    + Contains(bounds : Rectangle, x : double, y : double) : bool
+    + OvalHitTestStrategy()
+}
+IHitTestStrategy <|.. OvalHitTestStrategy
+@enduml

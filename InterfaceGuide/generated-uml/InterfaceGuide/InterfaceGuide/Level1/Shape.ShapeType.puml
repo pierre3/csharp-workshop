@@ -1,0 +1,7 @@
+@startuml ShapeType
+enum Shapes1.ShapeType <<sealed>>  {
+    Rectangle = 0
+    Oval = 1
+    + ShapeType()
+}
+@enduml

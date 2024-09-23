@@ -1,0 +1,6 @@
+@startuml CommandAttribute
+class CommandAttribute <<sealed>>  {
+    + <<readonly>> Command : string <<get>>
+    + CommandAttribute(command : string)
+}
+@enduml

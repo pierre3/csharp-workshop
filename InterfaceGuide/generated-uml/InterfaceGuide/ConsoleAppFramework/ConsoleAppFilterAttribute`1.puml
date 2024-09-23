@@ -1,0 +1,5 @@
+@startuml ConsoleAppFilterAttribute`1
+class ConsoleAppFilterAttribute`1<T> <<sealed>>  {
+    + ConsoleAppFilterAttribute()
+}
+@enduml

@@ -28,7 +28,7 @@
 > - 抽象クラスと違って、複数のインターフェースを継承できる。
 > - class キーワードの代わりに interface キーワードを使う。
 > 
-> https://ufcpp.net/study/csharp/oo_interface.html?p=2#lib
+> https://ufcpp.net/study/csharp/oo_interface.html
 
 ## インターフェースの役割
 

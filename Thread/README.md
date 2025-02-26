@@ -472,6 +472,9 @@ class Program
 
 ```
 
+> [!info]
+> 参考：https://qiita.com/Nuits/items/99360b22cddea36499fd
+
 ## 6. Task
 
 以下に、`Task`クラスの主要なプロパティとメソッドを表形式でまとめました。
@@ -493,9 +496,9 @@ class Program
 | メソッド            | 説明                                                                 | 例                                                |
 |--------------------|--------------------------------------------------------------------|--------------------------------------------------|
 | `Run`              | 新しいタスクを作成して実行します                                      | `Task.Run(() => DoWork())`                       |
-| `Wait`             | タスクが完了するまで現在のスレッドをブロックします                    | `task.Wait()`                                    |
-| `WaitAll`          | 指定されたすべてのタスクが完了するまで待機します                      | `Task.WaitAll(task1, task2)`                     |
-| `WaitAny`          | 指定された任意のタスクが完了するまで待機します                        | `Task.WaitAny(task1, task2)`                     |
+| `Wait`             | タスクが完了するまで現在のスレッドをブロックします                    | `task.Wait()` ※！                                    |
+| `WaitAll`          | 指定されたすべてのタスクが完了するまで待機します                      | `Task.WaitAll(task1, task2)` ※！              |
+| `WaitAny`          | 指定された任意のタスクが完了するまで待機します                        | `Task.WaitAny(task1, task2)` ※！              |
 | `ContinueWith`     | 現在のタスクが完了した後に実行する継続タスクを作成します              | `task.ContinueWith(t => Console.WriteLine("Task completed"))` |
 | `FromResult`       | 指定された結果を持つ成功したタスクを作成します                        | `Task.FromResult(42)`                            |
 | `FromException`    | 指定された例外を持つ失敗したタスクを作成します                        | `Task.FromException(new Exception("Error"))`     |
@@ -504,9 +507,59 @@ class Program
 | `WhenAll`          | 指定されたすべてのタスクが完了するまで待機するタスクを作成します       | `Task.WhenAll(task1, task2)`                     |
 | `WhenAny`          | 指定された任意のタスクが完了するまで待機するタスクを作成します         | `Task.WhenAny(task1, task2)`                     |
 
-`ConfigureAwait`は、C#の非同期プログラミングにおいて、`await`の動作をカスタマイズするためのメソッドです。具体的には、`await`の後に継続するコードが、呼び出し元のコンテキスト（通常はUIスレッド）で実行されるかどうかを制御します。以下に詳細を説明します。
+> [!Warning]
+> ※！: Wait,WaitAll,WaitAnyはスレッドをブロックします。
+> - 完了するまでThreadPool内のスレッドを占有し続けるため、スレッドの枯渇に繋がる場合があります。
+> - 複数のスレッドが相互に待ち状態になるデッドロックが発生するリスクが高まります。
+> 
+> 上記メソッドの利用は出来るだけ避け、WhenAllやWhenAnyを利用するようにしましょう。
+> 
+> ```csharp
+> await task1;
+> await WhenAll(task2,task3);
+> await WhenAny(task4,task5,task6);
+>```
+
+### 完了済みタスク
+完了済みタスクは、基底クラスでのデフォルト実装などで、非同期メソッドだけど非同期処理は行わないケースで利用します。
+
+- `Task.CompletionTask`: 完了済みタスクを表す静的プロパティ
+- `Task.FromResult<T>(T value)`：特定の値を返す完了済みタスクを返すメソッド
+
+```csharp
+class Runner: RunnerBase
+{
+    public override async Task RunAsync()
+    {
+        //何らかの非同期処理
+        await ProcessAsync();
+    }
+    public override async Task<int> Run2Async()
+    {
+        //intを返す非同期処理
+        return await GetIntValueAsync();
+    }
+}
+
+class RunnerBase
+{
+    //Defaultでは何もしない
+    public virtual Task RunAsync()
+    {
+        return Task.CompletionTask;
+    }
+    //Defaultでは非同期処理せずに既定値を返す
+    public virtual Task<int> Run2Async()
+    {
+        return Task.FromResult(0);
+    }
+}
+```
+
 
 ### `ConfigureAwait()`について
+
+`ConfigureAwait`は、C#の非同期プログラミングにおいて、`await`の動作をカスタマイズするためのメソッドです。具体的には、`await`の後に継続するコードが、呼び出し元のコンテキスト（通常はUIスレッド）で実行されるかどうかを制御します。以下に詳細を説明します。
 
 #### `ConfigureAwait(true)`
 

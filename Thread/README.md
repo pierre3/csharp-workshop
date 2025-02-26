@@ -180,15 +180,41 @@ C#でマルチスレッドプログラミングをサポートする仕組み
 非同期処理のための古い方法の一つで、主に .NET Frameworkの初期バージョンで使用されました。非同期メソッドは `Begin` で始まり `End` で終わる命名規則に従います。
 
 ```csharp
-delegate int MyDelegate(int x);
-
-MyDelegate del = new MyDelegate(MyMethod);
-IAsyncResult asyncResult = del.BeginInvoke(10, null, null);
-int result = del.EndInvoke(asyncResult);
-
-int MyMethod(int x)
+public class AsyncMain
 {
-    return x * x;
+    static void Main()
+    {
+        // テストクラスのインスタンスを作成します。
+        AsyncDemo ad = new AsyncDemo();
+
+        // デリゲートを作成します。
+        AsyncMethodCaller caller = new AsyncMethodCaller(ad.TestMethod);
+
+        int dummy = 0;
+        IAsyncResult result = caller.BeginInvoke(3000,
+            out dummy,
+            new AsyncCallback(CallbackMethod),
+            "The call executed on thread {0}, with return value \"{1}\".");
+
+        Console.WriteLine("メインスレッド {0} は引き続き実行されます...",
+            Thread.CurrentThread.ManagedThreadId);
+
+        Thread.Sleep(4000);
+        Console.WriteLine("メインスレッドが終了しました。");
+    }
+
+    static void CallbackMethod(IAsyncResult ar)
+    {
+        // デリゲートを取得します。
+        AsyncResult result = (AsyncResult) ar;
+        AsyncMethodCaller caller = (AsyncMethodCaller) result.AsyncDelegate;
+        
+        string formatString = (string) ar.AsyncState;
+        int threadId = 0;
+        // EndInvokeを呼び出して結果を取得します。
+        string returnValue = caller.EndInvoke(out threadId, ar);
+        Console.WriteLine(formatString, threadId, returnValue);
+    }
 }
 ```
 

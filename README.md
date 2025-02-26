@@ -3,3 +3,4 @@
 ## Index
 - [LINQ](/LinqExplorer/)
 - [Interface](/InterfaceGuide/)
+- [Multi Thread](/Thread/)

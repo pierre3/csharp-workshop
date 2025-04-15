@@ -4,3 +4,4 @@
 - [LINQ](/LinqExplorer/)
 - [Interface](/InterfaceGuide/)
 - [Multi Thread](/MultiThread/)
+- [DI](/DependencyInjection/)

@@ -1,0 +1,20 @@
+{
+  "profiles": {
+    "extension": {
+      "commandName": "Project",
+      "commandLineArgs": "extension"
+    },
+    "bk-field": {
+      "commandName": "Project",
+      "commandLineArgs": "bk-field"
+    },
+    "lambda-params": {
+      "commandName": "Project",
+      "commandLineArgs": "lambda-params"
+    },
+    "null-conditional-assignment": {
+      "commandName": "Project",
+      "commandLineArgs": "null-conditional-assignment"
+    }
+  }
+}
